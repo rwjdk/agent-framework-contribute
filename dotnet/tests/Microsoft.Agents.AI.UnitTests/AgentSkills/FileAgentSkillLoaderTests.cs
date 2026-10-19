@@ -1326,8 +1326,16 @@ public sealed class FileAgentSkillLoaderTests : IDisposable
             Assert.Skip("Directory links are not supported in this environment.");
         }
 
-        // Act & Assert
-        await Assert.ThrowsAsync<InvalidOperationException>(() => resource.ReadAsync());
+        try
+        {
+            // Act & Assert
+            await Assert.ThrowsAsync<InvalidOperationException>(() => resource.ReadAsync());
+        }
+        finally
+        {
+            // Remove the link before recursive cleanup can delete its target.
+            Directory.Delete(skillDir);
+        }
     }
 #endif
 

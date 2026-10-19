@@ -27,7 +27,7 @@
     <RootNamespace>HostedInvocationsEchoAgent</RootNamespace>
     <AssemblyName>HostedInvocationsEchoAgent</AssemblyName>
     <UserSecretsId>27e5c7df-546c-477b-ab05-d1e070a1b78a</UserSecretsId>
-    <AgentFrameworkVersion>1.20.0</AgentFrameworkVersion>
+    <AgentFrameworkVersion>1.25.0</AgentFrameworkVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -27,13 +27,13 @@
     <RootNamespace>HostedToolboxMcpSkills</RootNamespace>
     <AssemblyName>HostedToolboxMcpSkills</AssemblyName>
     <UserSecretsId>466c2502-39a9-4548-89b5-e92e14cd7fa3</UserSecretsId>
-    <AgentFrameworkVersion>1.20.0-preview.260831.1</AgentFrameworkVersion>
+    <AgentFrameworkVersion>1.25.0-preview.261014.1</AgentFrameworkVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Agents.AI.Foundry" Version="$(AgentFrameworkVersion)" />
     <PackageReference Include="Microsoft.Agents.AI.Foundry.Hosting" Version="$(AgentFrameworkVersion)" />
-    <PackageReference Include="Microsoft.Agents.AI.Mcp" Version="1.20.0-alpha.260831.1" />
+    <PackageReference Include="Microsoft.Agents.AI.Mcp" Version="1.25.0-alpha.261014.1" />
     <PackageReference Include="Azure.AI.Projects" Version="3.0.0-beta.2" />
     <PackageReference Include="Azure.Identity" Version="1.21.0" />
     <PackageReference Include="ModelContextProtocol" Version="2.2.0" />

@@ -14,7 +14,7 @@
     <RootNamespace>HostedWorkflowResilient</RootNamespace>
     <AssemblyName>HostedWorkflowResilient</AssemblyName>
     <UserSecretsId>b45eca04-a1ba-4c64-8318-a6051e83b485</UserSecretsId>
-    <AgentFrameworkVersion>1.18.0-preview.260818.1</AgentFrameworkVersion>
+    <AgentFrameworkVersion>1.25.0-preview.261014.1</AgentFrameworkVersion>
     <LocalAgentFrameworkRoot>$(MSBuildThisFileDirectory)..\..\..\..\..\src</LocalAgentFrameworkRoot>
     <UseLocalAgentFramework Condition="'$(UseLocalAgentFramework)' == '' and Exists('$(LocalAgentFrameworkRoot)\Microsoft.Agents.AI.Foundry.Hosting\Microsoft.Agents.AI.Foundry.Hosting.csproj')">true</UseLocalAgentFramework>
   </PropertyGroup>
