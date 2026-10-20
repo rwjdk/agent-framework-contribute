@@ -22,7 +22,7 @@
     <PackageVersion Include="Aspire.Hosting.Azure.CognitiveServices" Version="$(AspireAppHostSdkVersion)" />
     <PackageVersion Include="Aspire.Microsoft.Azure.Cosmos" Version="$(AspireAppHostSdkVersion)" />
     <PackageVersion Include="CommunityToolkit.Aspire.OllamaSharp" Version="13.5.0" />
-    <PackageVersion Include="MessagePack" Version="3.1.7" /> <!-- Transitive dependency of Aspire pinned to newer version due to vulnerability in 2.5.192 -->
+    <PackageVersion Include="MessagePack" Version="3.1.12" /> <!-- Pin Aspire's transitive dependency to a patched version. -->
     <!-- Azure.* -->
     <PackageVersion Include="Azure.AI.AgentServer.Core" Version="1.0.0-beta.29" />
     <PackageVersion Include="Azure.AI.AgentServer.Invocations" Version="1.0.0-beta.6" />
@@ -150,7 +150,7 @@
     <PackageVersion Include="Microsoft.AspNetCore.TestHost" Condition="'$(TargetFramework)' == 'net10.0'" Version="10.0.12" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.10.0" />
     <PackageVersion Include="Moq" Version="[4.18.4]" />
-    <PackageVersion Include="xunit.v3.mtp-v2" Version="4.0.0" />
+    <PackageVersion Include="xunit.v3.mtp-v2" Version="4.0.2" />
     <PackageVersion Include="xRetry.v3" Version="1.0.0" />
     <PackageVersion Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.11.2" />
     <!-- Symbols -->

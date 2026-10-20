@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 
 using System;
+using System.Globalization;
 using Microsoft.Agents.AI.Workflows.Declarative.Entities;
 using Microsoft.Agents.ObjectModel;
 using Microsoft.PowerFx.Types;
@@ -83,16 +84,17 @@ public sealed class EntityExtractorTest(ITestOutputHelper output) : WorkflowTest
     }
 
     [Theory]
-    [InlineData("2023-12-25")]
-    [InlineData("12/25/2023")]
-    [InlineData("2023-12-25 10:30:00")]
-    public void Parse_DateEntity_ValidValue_ReturnsDate(string value)
+    [InlineData("2023-12-25", "en-US")]
+    [InlineData("12/25/2023", "en-US")]
+    [InlineData("2023-12-25 10:30:00", "en-US")]
+    [InlineData("25/12/2023", "da-DK")]
+    public void Parse_DateEntity_ValidValue_ReturnsDate(string value, string culture)
     {
         // Arrange
         EntityReference entity = CreateDateEntity();
 
         // Act
-        EntityExtractionResult result = EntityExtractor.Parse(entity, value);
+        EntityExtractionResult result = ParseWithCulture(entity, value, culture);
 
         // Assert
         Assert.True(result.IsValid);
@@ -116,15 +118,16 @@ public sealed class EntityExtractorTest(ITestOutputHelper output) : WorkflowTest
     }
 
     [Theory]
-    [InlineData("2023-12-25 10:30:00")]
-    [InlineData("12/25/2023 10:30:00 AM")]
-    public void Parse_DateTimeEntity_ValidValue_ReturnsDateTime(string value)
+    [InlineData("2023-12-25 10:30:00", "en-US")]
+    [InlineData("12/25/2023 10:30:00 AM", "en-US")]
+    [InlineData("25/12/2023 10:30:00", "da-DK")]
+    public void Parse_DateTimeEntity_ValidValue_ReturnsDateTime(string value, string culture)
     {
         // Arrange
         EntityReference entity = CreateDateTimeEntity();
 
         // Act
-        EntityExtractionResult result = EntityExtractor.Parse(entity, value);
+        EntityExtractionResult result = ParseWithCulture(entity, value, culture);
 
         // Assert
         Assert.True(result.IsValid);
@@ -147,21 +150,22 @@ public sealed class EntityExtractorTest(ITestOutputHelper output) : WorkflowTest
     }
 
     [Theory]
-    [InlineData("2023-12-25 10:30:00")]
-    [InlineData("12/25/2023 10:30:00")]
-    public void Parse_DateTimeNoTimeZoneEntity_ValidValue_ReturnsDateTime(string value)
+    [InlineData("2023-12-25 10:30:00", "en-US")]
+    [InlineData("12/25/2023 10:30:00", "en-US")]
+    [InlineData("25/12/2023 10:30:00", "da-DK")]
+    public void Parse_DateTimeNoTimeZoneEntity_ValidValue_ReturnsDateTime(string value, string culture)
     {
         // Arrange
         EntityReference entity = CreateDateTimeNoTimeZoneEntity();
 
         // Act
-        EntityExtractionResult result = EntityExtractor.Parse(entity, value);
+        EntityExtractionResult result = ParseWithCulture(entity, value, culture);
 
         // Assert
         Assert.True(result.IsValid);
         DateTimeValue dateTimeValue = Assert.IsType<DateTimeValue>(result.Value);
         DateTime dateTime = dateTimeValue.GetConvertedValue(null);
-        Assert.Equal(DateTime.Parse(value), dateTime);
+        Assert.Equal(DateTime.Parse(value, CultureInfo.GetCultureInfo(culture)), dateTime);
     }
 
     [Theory]
@@ -752,6 +756,20 @@ public sealed class EntityExtractorTest(ITestOutputHelper output) : WorkflowTest
 
     private static PointOfInterestPrebuiltEntity CreatePointOfInterestEntity() =>
         new PointOfInterestPrebuiltEntity.Builder().Build();
+
+    private static EntityExtractionResult ParseWithCulture(EntityReference entity, string value, string culture)
+    {
+        CultureInfo originalCulture = CultureInfo.CurrentCulture;
+        try
+        {
+            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(culture);
+            return EntityExtractor.Parse(entity, value);
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = originalCulture;
+        }
+    }
 
     private static StringPrebuiltEntity CreateStringEntity() =>
         new StringPrebuiltEntity.Builder().Build();
